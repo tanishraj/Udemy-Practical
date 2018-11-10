@@ -13,6 +13,7 @@ import { DeleteDataComponent } from './delete-data/delete-data.component';
 import { NgOnInitComponent } from './ng-on-init/ng-on-init.component';
 import { SeperationOfConcernComponent } from './seperation-of-concern/seperation-of-concern.component';
 import { PostService } from './services/post.service';
+import { UnexpectedErrorComponent } from './unexpected-error/unexpected-error.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PostService } from './services/post.service';
     UpdateDataComponent,
     DeleteDataComponent,
     NgOnInitComponent,
-    SeperationOfConcernComponent
+    SeperationOfConcernComponent,
+    UnexpectedErrorComponent
   ],
   imports: [
     BrowserModule,

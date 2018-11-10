@@ -12,6 +12,7 @@ import { UpdateDataComponent } from './update-data/update-data.component';
 import { DeleteDataComponent } from './delete-data/delete-data.component';
 import { NgOnInitComponent } from './ng-on-init/ng-on-init.component';
 import { SeperationOfConcernComponent } from './seperation-of-concern/seperation-of-concern.component';
+import { PostService } from './services/post.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { SeperationOfConcernComponent } from './seperation-of-concern/seperation
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [],
+  providers: [PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

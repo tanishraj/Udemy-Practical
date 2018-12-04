@@ -1,3 +1,6 @@
+import { CrudService } from './services/crud.service';
+import { ErrorHandler } from '@angular/core';
+import { AppErrorHandler } from './common/app-error-handler';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -14,6 +17,7 @@ import { NgOnInitComponent } from './ng-on-init/ng-on-init.component';
 import { SeperationOfConcernComponent } from './seperation-of-concern/seperation-of-concern.component';
 import { PostService } from './services/post.service';
 import { UnexpectedErrorComponent } from './unexpected-error/unexpected-error.component';
+import { ErrorHandlingUsingAppSpecificErrorComponent } from './error-handling-using-app-specific-error/error-handling-using-app-specific-error.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,8 @@ import { UnexpectedErrorComponent } from './unexpected-error/unexpected-error.co
     DeleteDataComponent,
     NgOnInitComponent,
     SeperationOfConcernComponent,
-    UnexpectedErrorComponent
+    UnexpectedErrorComponent,
+    ErrorHandlingUsingAppSpecificErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,14 @@ import { UnexpectedErrorComponent } from './unexpected-error/unexpected-error.co
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
-  providers: [PostService],
+  providers: [
+    PostService,
+    CrudService,
+    {
+      provide: ErrorHandler,
+      useClass: AppErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

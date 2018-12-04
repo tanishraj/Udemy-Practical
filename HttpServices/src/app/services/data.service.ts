@@ -10,26 +10,24 @@ import { Observable, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
-  
-  private baseUrl: string = "https://asdjsonplaceholder.typicode.com/posts";
+export class DataService {
 
-  constructor(private http: Http) { }
+  constructor(private baseUrl:  string, private http: Http) { }
 
-  getPosts(){
-    return this.http.get(this.baseUrl).pipe(map(res => res), catchError(this.errorHandler));
+  getAll(){
+    return this.http.get(this.baseUrl).pipe(map(res => res.json()), catchError(this.errorHandler));
   }
 
-  createPost(post){
-    return this.http.post(this.baseUrl, JSON.stringify(post)).pipe(map((res => res), catchError(this.errorHandler)));
+  create(resource){
+    return this.http.post(this.baseUrl, JSON.stringify(resource)).pipe(map((res => res.json()), catchError(this.errorHandler)));
   }
 
-  updatePost(post){
-    return this.http.patch(this.baseUrl + '/' + post.id, JSON.stringify({ isRead: true }));
+  update(resource){
+    return this.http.patch(this.baseUrl + '/' + resource.id, JSON.stringify({ isRead: true }));
   }
 
-  deletePost(post){
-    return this.http.delete(this.baseUrl + '/' + post.id).pipe(map(res => res), catchError(this.errorHandler));
+  delete(id){
+    return this.http.delete(this.baseUrl + '/' + id).pipe(map(res => res.json()), catchError(this.errorHandler));
   }
 
   private errorHandler(error: Response){

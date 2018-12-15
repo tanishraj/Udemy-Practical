@@ -1,3 +1,4 @@
+import { GithubProfileComponent } from './github-profile/github-profile.component';
 import { DataService } from './services/data.service';
 import { HttpModule } from '@angular/http';
 import { PostsService } from './services/posts.service';
@@ -7,20 +8,22 @@ import { RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
-import { GithubProfileComponent } from './github-profile/github-profile.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostsComponent,
-    GithubProfileComponent
+    GithubProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     RouterModule.forRoot([
+      {path:'', component:HomeComponent},
       {path:'posts', component:PostsComponent},
-      
+      {path:'github-profiles', component:GithubProfileComponent}
     ])
   ],
   providers: [

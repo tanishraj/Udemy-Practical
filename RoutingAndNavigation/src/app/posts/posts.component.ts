@@ -1,7 +1,8 @@
-import { catchError } from 'rxjs/operators';
+import { NotFoundError } from './../app-error/not-found-error';
+import { AppError } from './../app-error/app-error';
+import { BadRequestError } from './../app-error/bad-request-error';
 import { PostsService } from './../services/posts.service';
 import { Component, OnInit } from '@angular/core';
-import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -10,31 +11,46 @@ import { pipe } from 'rxjs';
 })
 export class PostsComponent implements OnInit {
 
-  posts : any;
+  posts : any[];
 
   constructor(private postService : PostsService) { }
 
   ngOnInit() {
-    this.postService.getPosts().subscribe(
-      (res) => {
-        this.posts = res.json();
+    this.postService.getAll().subscribe(
+      (posts) => {
+        this.posts = posts;
+      }
+    )
+  }
+
+  createPost(input : HTMLInputElement){
+    let post = { title: input.value};
+    this.posts.unshift(post);
+    input.value = "";
+
+    this.postService.create(post).subscribe(
+      (createPost) => {
+        post['id'] = createPost.id;
       },
-      (err) => {
-        console.log("Something went wrong", err);
+      (error: AppError) => {
+        this.posts.shift();
+        if(error instanceof BadRequestError){
+          console.log("Bad request has been made.");
+        } else{
+          throw error;
+        }
       }
     )
   }
 
   deletePost(post){
-    this.postService.deletePost(post.id).subscribe(
-      (res) => {
+    this.postService.delete(post.id).subscribe(
+      () => {
         this.posts.splice(this.posts.indexOf(post), 1);
       },
-      (err:Response) => {
-        if(err.status === 404){
-          alert("Post is already been deleted.");
-        } else{
-          console.log("Something went wrong", err);
+      (error : AppError) => {
+        if(error instanceof NotFoundError){
+          alert("This post is already deleted.");
         }
       }
     )

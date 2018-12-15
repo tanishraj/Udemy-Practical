@@ -1,3 +1,4 @@
+import { DataService } from './services/data.service';
 import { HttpModule } from '@angular/http';
 import { PostsService } from './services/posts.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,7 +16,10 @@ import { PostsComponent } from './posts/posts.component';
     BrowserModule,
     HttpModule
   ],
-  providers: [PostsService],
+  providers: [
+    PostsService,
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
